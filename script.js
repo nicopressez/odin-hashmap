@@ -91,10 +91,78 @@ class HashMap{
     }         previousBucket = currentBucket;
               currentBucket = currentBucket.next;}
 }
+length(){
+    let currentLength = 0;
+    for (let i = 0; i < this.bucketsArray.length; i++) {
+        if (this.bucketsArray[i]) {
+            let currentKey = this.bucketsArray[i]
+                while(currentKey){
+                    currentLength++;
+                    currentKey = currentKey.next;
+                }
+        }       
+    }
+    return currentLength;
+}
+clear(){
+    for (let i = 0; i < this.bucketsArray.length; i++) {
+        if (this.bucketsArray[i]) this.bucketsArray[i] = null;
+        }       
+}
+keys(){
+    const keysArray = [];
+    for (let i = 0; i < this.bucketsArray.length; i++) {
+        if (this.bucketsArray[i]) {
+            let currentKey = this.bucketsArray[i]
+               while(currentKey){
+                    keysArray.push(currentKey.key);
+                    currentKey = currentKey.next;
+              }
+        }       
+    }
+    return keysArray;
+}
+values(){
+    const valuesArray = [];
+    for (let i = 0; i < this.bucketsArray.length; i++) {
+        if (this.bucketsArray[i]) {
+            let currentKey = this.bucketsArray[i]
+               while(currentKey){
+                    valuesArray.push(currentKey.value);
+                    currentKey = currentKey.next;
+              }
+        }       
+    }
+    return valuesArray;
+}
+entries(){
+    const entriesArray = [];
+    for (let i = 0; i < this.bucketsArray.length; i++) {
+        if (this.bucketsArray[i]) {
+            let currentKey = this.bucketsArray[i]
+               while(currentKey){
+                    entriesArray.push([currentKey.key, currentKey.value]);
+                    currentKey = currentKey.next;
+              }
+        }       
+    }
+    return entriesArray;
+}
 }
 
 const hash = new HashMap();
 
 hash.set("john", "35");
+hash.set("¡mqd", "3");
+hash.set("ºmeb", "55");
+hash.set("»mda", "15");
+hash.set("ħīņl", "56");
+hash.set("ēōģl", "28");
+hash.set("ȩǿįk", "37");
+hash.set("ǰǿņn", "12");
+hash.set("Ɉơղņ", "4");
+hash.set("ɉơոɲ", "0");
+hash.set("ȷơռɲ", "19");
+hash.set("ȷơņո", "89");
 
 console.log(hash)
