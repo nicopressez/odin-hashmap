@@ -38,19 +38,59 @@ class HashMap{
     }
     set(key,value){
         const code = this.hash(key);
-        if (this.bucketsArray[code] && 
-            this.bucketsArray[code].key == key ) this.bucketsArray[code].value = value;
+        const newbucket = new Node (key, value);
 
-        else { const newbucket = new Node (key, value);
-        this.bucketsArray[code] = newbucket;}
+        if (this.bucketsArray[code] && this.bucketsArray[code].key == key ) this.bucketsArray[code].value = value;
+        else if (this.bucketsArray[code] && this.bucketsArray[code].key !== key){   
+               while (this.bucketsArray[code].next){
+                this.bucketsArray[code] = this.bucketsArray[code].next;}
+                this.bucketsArray[code].next = newbucket;
+                 }
+        
+        else {this.bucketsArray[code] = newbucket}
 
         this.checkLoad();
     }
     get(key){
         const code = this.hash(key);
-        if (this.bucketsArray[code])return this.bucketsArray[code].value;
-        else return null;
+        let currentBucket = this.bucketsArray[code];
+        if (!this.bucketsArray[code])return null;
+        if (this.bucketsArray[code].key == key)return this.bucketsArray[code].value
+        else if (this.bucketsArray[code] &&
+                 this.bucketsArray[code].key !== key){
+                    while (currentBucket){
+                        if (currentBucket.key === key) return currentBucket.value;
+                        currentBucket = currentBucket.next
+                    }
+                    return null;
+                 }
     }
+    has(key){
+        const keyExist = this.get(key);
+        if (keyExist) return true
+            else return false;
+    }
+    remove(key){
+        const code = this.hash(key);
+        let currentBucket = (this.bucketsArray[code]);
+        let previousBucket = null;;
+        if (!currentBucket) return null;
+
+        while (currentBucket){
+         if (currentBucket.key === key) {
+                    if (!previousBucket){
+                        if (!currentBucket.next){
+                            this.bucketsArray[code] = null;
+                        }else{
+                            this.bucketsArray[code] = currentBucket.next;
+                        }
+                    }else{
+                        previousBucket.next = currentBucket.next;
+                    }
+                    return;
+    }         previousBucket = currentBucket;
+              currentBucket = currentBucket.next;}
+}
 }
 
 const hash = new HashMap();
